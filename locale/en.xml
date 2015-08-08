@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+	<!-- table management -->
+	<string name="addtable">Add Table(T)</string>
+	<string name="addnote">Add Note(N)</string>
+	<string name="edittable">Edit</string>
+	<string name="editnote">Note</string>
+	<string name="removetable">Remove</string>
+	<string name="removetables">Remove All</string>
+	<string name="aligntables">Align All</string>
+	<string name="cleartables">Clear All</string>
+	<string name="confirmall">Really delete all tables</string>
+	<string name="newtable">new table</string>
+	<string name="newnote">Created by</string>
+	<string name="addpending">place table(T)</string>
+	<string name="addpendingnote">place note(N)</string>
+	<string name="tablenamelabel">Name</string>
+	<string name="tablecommentlabel">Comment</string>
+	<string name="commentmessage">Comment</string>
+	
+	<!-- row management -->
+	<string name="addrow">Add(A)</string>
+	<string name="editrow">Edit(Ent)</string>
+	<string name="removerow">Remove(Delete)</string>
+	<string name="relationedit">Edit Relation(R)</string>
+	<string name="uprow">Up(U)</string>
+	<string name="downrow">Down(D)</string>
+	<string name="pkrow">PK(P)</string>
+	<string name="uniquerow">Unique(N)</string>
+	<string name="deselectrow">Deselect</string>
+	<string name="newrow">new field</string>
+	<string name="foreigncreate">Create Fkey</string>
+	<string name="foreignpending">click target table</string>
+	<string name="foreignconnect">Connect Fkey</string>
+	<string name="foreignconnectpending">click target row</string>
+	<string name="foreigndisconnect">Remove Fkey</string>
+	<string name="confirmtable">Really delete table/note</string>
+	<string name="confirmrow">Really delete field</string>
+
+	<!-- row edit -->
+	<string name="name">Name</string>
+	<string name="type">Type</string>
+	<string name="size">Size</string>
+	<string name="def">Default</string>
+	<string name="notnull">NOT NULL</string>
+	<string name="null">NULLABLE</string>
+	<string name="ai">Autoincrement</string>
+	<string name="comment">Edit comment</string>
+	<string name="savebtn">Save (Enter)</string>
+	<string name="cancelbtn">Cancel (Ctrl+Space)</string>
+	<string name="commenttext">Enter comment for this field</string>
+	
+	<!-- windows & options -->
+	<string name="windowok">OK (Enter)</string>
+	<string name="windowcancel">Cancel</string>
+	<string name="throbber">Please wait...</string>
+	<string name="options">Options</string>
+	<string name="editrelation">Edit Relationship</string>
+	<string name="language">Language</string>
+	<string name="db">Database for new designs</string>
+	<string name="optionsnotice">Some options are applied only after full page reload. Cookies must be enabled for options to work.</string>
+	<string name="snap">Table snap distance</string>
+	<string name="optionsnapnotice">In pixels, 0 = disable snapping</string>
+	<string name="pattern">Pattern for foreign names</string>
+	<string name="optionpatternnotice">%T = primary table, %R = primary key, %t = foreign table</string>
+	<string name="hide">Hide connectors on table drag?</string>
+	<string name="vector">Draw smooth connectors (if supported by browser)?</string>
+	<string name="showsize">Show field size in table design?</string>
+	<string name="showtype">Show field datatype in table design?</string>
+	
+	<!-- keys -->
+	<string name="tablekeys">Keys</string>
+	<string name="keyslistlabel">Keys in table "%s"</string>
+	<string name="keytypelabel">Type:</string>
+	<string name="keynamelabel">Name:</string>
+	<string name="keyfieldslabel">Fields in key</string>
+	<string name="keyavaillabel">Available fields</string>
+	<string name="keyedit">Edit key</string>
+	<string name="keyadd">Add key</string>
+	<string name="keyremove">Remove key</string>
+	
+	<!-- io -->
+	<string name="saveload">Save / Load (Ctrl+O)</string>
+	<string name="empty">Please paste XML data into the text area below and try again.</string>
+	<string name="admin">Admin</string>
+	<string name="client">Client</string>
+	<string name="server">Server</string>
+	<string name="output">Input / Output</string>
+	<string name="adminsync">Refresh (R)</string>
+	<string name="adminsave">Save (S)</string>
+	<string name="adminload">Load (L)</string>
+	<string name="admincleartables">New</string>
+	<string name="clientsave">Save XML</string>
+	<string name="clientload">Load XML</string>
+	<string name="clientlocalsave">Save in Browser</string>
+	<string name="clientlocalload">Load from Browser</string>
+	<string name="clientsql">Generate SQL</string>
+	<string name="backendlabel">Server backend:</string>
+	<string name="serversave">Save</string>
+	<string name="quicksave">Quicksave</string>
+	<string name="serverload">Load</string>
+	<string name="serverlist">List items</string>
+	<string name="serverimport">Import from DB</string>
+	<string name="serverloadprompt">Enter keyword under which your design was saved:</string>
+	<string name="serversaveprompt">Enter keyword under which your design will be saved:</string>
+	<string name="serverimportprompt">Enter name of database to be imported:</string>
+	<string name="httpresponse">Server response</string>
+	<string name="http201">Saved</string>
+	<string name="http404">Not Found</string>
+	<string name="http500">Internal Server Error</string>
+	<string name="http501">Not Implemented</string>
+	<string name="http503">Service Unavailable</string>
+	
+	<!-- misc -->
+	<string name="xmlerror">XML error</string>
+	<string name="docs">Documentation</string>
+	
+</locale>

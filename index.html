@@ -1,0 +1,540 @@
+<html>
+<!--
+    Author: Darren Leohart Bui
+    Implemented by using:
+        WWW SQL Designer, (C) 2005-2012 Ondrej Zara, ondras@zarovi.cz
+        Version: 2.7
+        See license.txt for licencing information.
+-->
+<head>
+    <title>SQL Designer - DMC</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="styles/bootstrap.css" media="all" />
+    <link rel="stylesheet" href="styles/jpreloader.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="Plugin/bootstrap-dialog/bootstrap-dialog.css"  media="all" />
+    <link rel="stylesheet" type="text/css" href="styles/iconselect.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="styles/style.css" media="all" />
+    <link rel="stylesheet" href="styles/print.css" type="text/css" media="print" />
+    <!--[if IE 6]><link rel="stylesheet" type="text/css" href="styles/ie6.css" /><![endif]-->
+    <!--[if IE 7]><link rel="stylesheet" type="text/css" href="styles/ie7.css" /><![endif]-->
+</head>
+
+<body>
+    <!-- This section is for Splash Screen -->
+    <section id="jSplash">
+        <section class="selected">
+            <h2 style="font-size:50px; color:#14D9EE;">SQL Designer - DMC</h2>
+            <strong>The simply but creative designer tool for SQL</strong>
+        </section>
+        <section>
+            <p><br/>Create your own <br/>
+            <span style="font-size:30px; color:#FF6123;">Entity Relationship Diagram(ERD)</span></p>
+        </section>
+        <section>
+            <p><br/>Sharing with your client <br/>
+            <span style="font-size:30px; color:#23FF27;">Using optimized synchronize algorithm</span></p>
+        </section>
+        <section>
+            <p><br/>Author <br/> 
+            <span style="font-size:25px; color:#FF23FF;">Darren Leohart Bui</span></p>
+        </section>
+    </section>
+
+   <div id="area"></div>
+
+    <!-- End of Splash Screen -->
+
+    <div id="zoom" class="btn-group btn-lg">
+        <a class="btn btn-default" id="zoomin">
+            <span class="glyphicon glyphicon-zoom-in"></span>
+        </a>
+        <a class="btn btn-default" id="zoomout">
+            <span class="glyphicon glyphicon-zoom-out"></span>
+        </a>
+    </div>
+
+    <div id="controls" class="row">
+        <div class="col-xs-6" id="bar">
+            <div id="toggle"></div>
+            <input type="button" id="saveload" class="btn btn-default btn-sm" />
+            <hr/>
+            <p class="hrtext large">Table/Note</p>
+            <input type="button" id="addtable" class="small btn btn-default btn-sm"/>
+            <input type="button" id="edittable" class="small btn btn-default btn-sm"/>
+            <input type="button" id="addnote" class="small btn btn-default btn-sm"/>
+            <input type="button" id="removetable" class="small btn btn-default btn-sm"/>
+            <input type="button" id="aligntables" class="small btn btn-default btn-sm"/>
+            <input type="button" id="cleartables" class="small btn btn-default btn-sm"/>
+            <input type="button" id="tablekeys" class="btn btn-default btn-sm"/>
+            <hr/>
+            <p class="hrtext">Field</p>
+            <input type="button" id="addrow" class="small btn btn-default btn-sm"/>
+            <input type="button" id="editrow" class="small btn btn-default btn-sm"/>
+            <input type="button" id="removerow" class="small btn btn-default btn-sm"/>
+            <input type="button" id="relationedit" class="small btn btn-default btn-sm"/>
+            <input type="button" id="uprow" class="small btn btn-default btn-sm" />
+            <input type="button" id="downrow" class="small btn btn-default btn-sm" />
+            <input type="button" id="pkrow" class="small btn btn-default btn-sm" />
+            <input type="button" id="uniquerow" class="small btn btn-default btn-sm" />
+            <input type="button" id="deselectrow" class="small btn btn-default btn-sm"/>
+            <input type="button" id="foreigncreate" class="small btn btn-default btn-sm"/>
+            <input type="button" id="foreignconnect" class="small btn btn-default btn-sm"/>
+            <input type="button" id="foreigndisconnect" class="small btn btn-default btn-sm"/>
+            <hr/>
+            <input type="button" id="options" class="btn btn-default btn-sm" />
+            <a href="http://code.google.com/p/wwwsqldesigner/w/list" target="_blank">
+                <input type="button" id="docs" value="" class="btn btn-link btn-sm" />
+            </a>
+        </div>
+
+        <div id="rubberband"></div>
+
+        <div id="minimap"></div>
+
+        <div id="background"></div>
+
+        <div id="window">
+            <div id="windowtitle">
+                <img id="throbber" src="images/throbber.gif" alt="" title="" />
+            </div>
+            <div id="windowcontent"></div>
+            <input type="button" id="windowok" class="btn btn-primary btn-sm" />
+            <input type="button" id="windowcancel" class="btn btn-default btn-sm" />
+        </div>
+    </div>
+    <!-- #controls -->
+
+    <div id="opts" class="form-horizontal">
+        <table id="options-table">
+            <tbody >
+                <tr>
+                    <td>
+                        *<label class="control-label" id="language" for="optionlocale"></label>
+                    </td>
+                    <td>
+                        <div class="col-sm-5 form-group">
+                            <select id="optionlocale" class="form-control input-sm">
+                                <option></option>
+                            </select>
+                        </div> 
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        *<label class="control-label" id="db" for="optiondb"></label>
+                    </td>
+                    <td>
+                        <div class="col-sm-6 form-group">
+                            <select id="optiondb" class="form-control input-sm">
+                                <option></option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="control-label" id="snap" for="optionsnap"></label>
+                    </td>
+                    <td>
+                        <div class="col-sm-3 form-group">
+                            <input type="text" size="4" id="optionsnap"  class="form-control input-sm"/>
+                        </div>
+                        <div class="col-sm-9">
+                            <small class="help-block" id="optionsnapnotice"></small>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="control-label" id="pattern" for="optionpattern"></label>
+                    </td>
+                    <td>
+                        <div class="col-sm-4 form-group">
+                            <input class="form-control input-sm" type="text" size="6" id="optionpattern" />
+                        </div>
+                        <div class="col-sm-6">
+                            <small class="help-block" id="optionpatternnotice"></small>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="control-label" id="hide" for="optionhide"></label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="optionhide" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        *<label id="vector" for="optionvector"></label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="optionvector" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        *<label class="control-label" id="showsize" for="optionshowsize"></label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="optionshowsize" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        *<label class="control-label" id="showtype" for="optionshowtype"></label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="optionshowtype" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr />* <span class="help-block" id="optionsnotice"></span>
+    </div>
+
+     <div id="relationtable">
+        <table id="relationship-table">
+            <tbody >
+                <tr>
+                    <td>
+                        <label class="control-label" id="rowOne"></label>
+                    </td>
+                    <td>
+                        <div id="optionrowone">
+                        </div> 
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="control-label" id="rowTwo"></label>
+                    </td>
+                    <td>
+                        <div id="optionrowtwo">
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="io">
+        <table>
+            <tbody>
+                <tr>
+                    <td colspan="2">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                        <fieldset>
+                            <legend id="admin" data-toggle="collapse" data-target="#collapseAdmin" href="#collapseAdmin">
+                            </legend>
+                            <div id="collapseAdmin" class="panel-collapse collapse in">
+                                <!-- <input type="button" id="adminsync" class="btn btn-default btn-sm" /> -->
+                                <input type="button" id="adminsave" class="btn btn-default btn-sm" />
+                                <input type="button" id="adminload" class="btn btn-default btn-sm" />
+                                <input type="button" id="admincleartables" class="btn btn-default btn-sm" />
+                            </div>
+                        </fieldset>
+                        </div>
+                    </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                        <fieldset>
+                            <legend id="client" data-toggle="collapse" data-target="#collapseClient" href="#collapseClient" class="collapsed"></legend>
+                            <div id="collapseClient" class="panel-collapse collapse">
+                                <input type="button" id="clientsave" class="btn btn-default btn-sm" />
+                                <input type="button" id="clientload" class="btn btn-default btn-sm" />
+                                <input type="button" id="clientlocalsave" class="btn btn-default btn-sm" />
+                                <input type="button" id="clientlocalload" class="btn btn-default btn-sm" />
+                                <hr/>
+                                <input type="button" id="clientsql" class="btn btn-primary btn-sm" />
+                            </div>
+                        </fieldset>
+                        </div>
+                    </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                        <fieldset>
+                            <legend id="server" data-toggle="collapse" data-target="#collapseServer" href="#collapseServer" class="collapsed"></legend>
+                            <div id="collapseServer" class="panel-collapse collapse">
+                                <label for="backend" id="backendlabel" class="control-label"></label>
+                                <select id="backend" class="form-control input-sm">
+                                    <option></option>
+                                </select>
+                                <hr/>
+                                <input type="button" id="serversave" class="btn btn-default btn-sm" />
+                                <input type="button" id="quicksave" class="btn btn-default btn-sm" />
+                                <input type="button" id="serverload" class="btn btn-default btn-sm" />
+                                <input type="button" id="serverlist" class="btn btn-default btn-sm" />
+                                <input type="button" id="serverimport" class="btn btn-default btn-sm" />
+                            </div>
+                        </fieldset>
+                        </div>
+                    </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                        <fieldset>
+                            <legend id="output" data-toggle="collapse" data-target="#collapseOutput" href="#collapseOutput"></legend>
+                            <div id="collapseOutput" class="panel-collapse collapse in">
+                                <textarea id="textarea" rows="1" cols="1" class="form-control"></textarea>
+                            </div>
+                            <!--modified by javascript later-->
+                        </fieldset>
+                        </div>
+                    </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="keys">
+
+        <fieldset>
+            <legend id="keyslistlabel"></legend>
+            <div class="col-sm-5 form-group">
+                <select id="keyslist" class="form-control">
+                    <option></option>
+                </select>
+            </div>
+            <input type="button" id="keyadd" class="btn btn-primary btn-sm" />
+            <input type="button" id="keyremove" class="btn btn-danger btn-sm" />
+        </fieldset>
+
+        <fieldset>
+            <legend id="keyedit"></legend>
+            <table>
+                <tbody>
+                    <tr>
+                        <label for="keytype" id="keytypelabel" class="control-label col-sm-2"></label>
+                        <div class="col-sm-4">
+                            <select id="keytype" class="form-control input-sm">
+                                <option></option>
+                            </select>
+                        </div>
+                        <label for="keyname" id="keynamelabel" class="control-label  col-sm-2"></label>
+                        <div class="col-sm-4">
+                          <input type="text" id="keyname" size="10" class="form-control input-sm" />
+                        </div>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <hr/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-sm-5">
+                            <label for="keyfields" id="keyfieldslabel" class="control-label"></label>
+                            <br/>
+                            <select id="keyfields" size="5" multiple="multiple" class="form-control">
+                                <option></option>
+                            </select>
+                        </td>
+                        <td class="col-sm-2">
+                            <input type="button" id="keyleft" value="&lt;&lt;" class="btn btn-default btn-xs" />
+                            <br/>
+                            <input type="button" id="keyright" value="&gt;&gt;" class="btn btn-default btn-xs" />
+                            <br/>
+                        </td>
+                        <td class="col-sm-5">
+                            <label for="keyavail" id="keyavaillabel" class="control-label"></label>
+                            <br/>
+                            <select id="keyavail" size="5" multiple="multiple" class="form-control">
+                                <option></option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+
+    <div id="table">
+        <table id="edit-table">
+            <tbody>
+                <tr>
+                    <td class="col-sm-2">
+                        <label id="tablenamelabel" for="tablename" class="control-label "></label>
+                    </td>
+                    <td class="col-sm-10">
+                        <div class="form-group">
+                            <input id="tablename" type="text" class="form-control" />                            
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-sm-2">
+                        <label id="tablecommentlabel" for="tablecomment" class="control-label"></label>
+                    </td>
+                    <td class="col-sm-10">
+                        <div class="form-group">
+                            <textarea rows="5" cols="40" id="tablecomment" class="form-control" ></textarea>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="contextMenu" class="dropdown clearfix">
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;">
+            <li><a tabindex="-1" id="cm1">Coming later</a></li>
+            <li><a tabindex="-1" id="cm2">Coming later</a></li>
+            <li class="divider"></li>
+            <li><a tabindex="-1" id="cmm1">Coming later</a></li>
+            <li><a tabindex="-1" id="cmm2">Coming later</a></li>
+            <li><a tabindex="-1" id="cmm3">Coming later</a></li>
+            <li><a tabindex="-1" id="cmm4">Coming later</a></li>
+            <li class="divider"></li>
+            <li><a tabindex="-1" id="cmd1">Coming later</a></li>
+        </ul>
+    </div>
+
+    <svg width="1968" height="1074">
+        <defs>
+            <marker markerWidth="30" markerHeight="10" viewBox="-15 -5 30 10" stroke-dasharray="1 0" refX="0" refY="0" markerUnits="strokeWidth" orient="auto" stroke="blue" id="manyRelationshipL">
+                <polyline points="0,-4 7,0 0,4" stroke-width="1px" fill="white"></polyline>
+                <polyline points="0,0 7,0" stroke-width="1px" fill="none"></polyline>
+            </marker>
+            <marker markerWidth="30" markerHeight="10" viewBox="-15 -5 30 10" stroke-dasharray="1 0" refX="0" refY="0" markerUnits="strokeWidth" orient="auto" stroke="blue" id="manyRelationshipR">
+                <polyline points="0,-4 -7,0 0,4" stroke-width="1px" fill="white"></polyline>
+                <polyline points="0,0 -7,0" stroke-width="1px" fill="none"></polyline>
+            </marker>
+            <marker id="oneRelationshipL" markerWidth="30" markerHeight="10" viewBox="-15 -5 30 10" stroke-dasharray="1 0"
+                refX="0" refY="0" markerUnits="strokeWidth" orient="auto" stroke="blue">
+                <polyline points="4,-4 4,4" stroke-width="1px"/>
+            </marker>
+            <marker id="oneRelationshipR" markerWidth="30" markerHeight="10" viewBox="-15 -5 30 10" stroke-dasharray="1 0"
+                    refX="0" refY="0" markerUnits="strokeWidth" orient="auto" stroke="blue">
+                <polyline points="-4,-4 -4,4" stroke-width="1px"/>
+            </marker>
+            <marker id="onlyOneRelationshipL" markerWidth="30" markerHeight="10" viewBox="-15 -5 30 10" stroke-dasharray="1 0"
+                    refX="0" refY="0" markerUnits="strokeWidth" orient="auto" stroke="blue">
+                <polyline points="3,-4 3,4" stroke-width="1px" />
+                <polyline points="5,-4 5,4" stroke-width="1px" />
+            </marker>
+            <marker id="onlyOneRelationshipR" markerWidth="30" markerHeight="10" viewBox="-15 -5 30 10" stroke-dasharray="1 0"
+                    refX="0" refY="0" markerUnits="strokeWidth" orient="auto" stroke="blue">
+                <polyline points="-3,-4 -3,4" stroke-width="1px" />
+                <polyline points="-5,-4 -5,4" stroke-width="1px" />
+            </marker>
+            <marker id="zeroOrOneRelationshipL" markerWidth="30" markerHeight="10" viewBox="-15 -5 30 10" stroke-dasharray="1 0"
+                    refX="0" refY="0" markerUnits="strokeWidth" orient="auto" stroke="blue">
+                <circle cx="8" cy="0" r="3" stroke-width="1px" fill="white" />
+                <polyline points="3,-4 3,4" stroke-width="1px" />
+            </marker>
+            <marker id="zeroOrOneRelationshipR" markerWidth="30" markerHeight="10" viewBox="-15 -5 30 10" stroke-dasharray="1 0"
+                    refX="0" refY="0" markerUnits="strokeWidth" orient="auto" stroke="blue">
+                <circle cx="-8" cy="0" r="3" stroke-width="1px" fill="white" />
+                <polyline points="-3,-4 -3,4" stroke-width="1px" />
+            </marker>
+            <marker id="oneOrManyRelationshipL" markerWidth="30" markerHeight="10" viewBox="-15 -5 30 10" stroke-dasharray="1 0"
+                    refX="0" refY="0" markerUnits="strokeWidth" orient="auto" stroke="blue">
+                <polyline points="0,-4 6.5,0 0,4" stroke-width="1px" fill="white"/>
+                <polyline points="0,0 6.5,0" stroke-width="1px" fill="none"></polyline>
+                <polyline points="7,-4 7,4" stroke-width="1px" />
+            </marker>
+            <marker id="oneOrManyRelationshipR" markerWidth="30" markerHeight="10" viewBox="-15 -5 30 10" stroke-dasharray="1 0"
+                    refX="0" refY="0" markerUnits="strokeWidth" orient="auto" stroke="blue">
+                <polyline points="0,-4 -6.5,0 0,4" stroke-width="1px" fill="white"/>
+                <polyline points="0,0 -6.5,0" stroke-width="1px" fill="none"/>
+                <polyline points="-7,-4 -7,4" stroke-width="1px" />
+            </marker>
+            <marker id="zeroOrManyRelationshipL" markerWidth="30" markerHeight="10" viewBox="-15 -5 30 10" stroke-dasharray="1 0"
+                    refX="0" refY="0" markerUnits="strokeWidth" orient="auto" stroke="blue">
+                <circle cx="10" cy="0" r="3" stroke-width="1px" fill="white" />
+                <polyline points="0,-4 6.5,0 0,4" stroke-width="1px" fill="white"/>
+                <polyline points="0,0 6.5,0" stroke-width="1px" fill="none"/>
+            </marker>
+            <marker id="zeroOrManyRelationshipR" markerWidth="30" markerHeight="10" viewBox="-15 -5 30 10" stroke-dasharray="1 0"
+                    refX="0" refY="0" markerUnits="strokeWidth" orient="auto" stroke="blue">
+                <circle cx="-10" cy="0" r="3" stroke-width="1px" fill="white" />
+                <polyline points="0,-4 -6.5,0 0,4" stroke-width="1px" fill="white"/>
+                <polyline points="0,0 -6.5,0" stroke-width="1px" fill="none"></polyline>
+            </marker>
+            <marker id="arrowRelationshipL" markerWidth="30" markerHeight="10" viewBox="-15 -5 30 10" stroke-dasharray="1 0"
+                    refX="0" refY="0" markerUnits="strokeWidth" orient="auto" stroke="blue">
+                <polygon points="6.5,-4 0,0 6.5,4" stroke-width="1px" fill="white"/>
+            </marker>
+            <marker id="arrowRelationshipR" markerWidth="30" markerHeight="10" viewBox="-15 -5 30 10" stroke-dasharray="1 0"
+                    refX="0" refY="0" markerUnits="strokeWidth" orient="auto" stroke="blue">
+                <polygon points="-6.5,-4 0,0 -6.5,4" stroke-width="1px" fill="white"/>
+            </marker>
+            <marker id="aggregationRelationshipL" markerWidth="30" markerHeight="10" viewBox="-15 -5 30 10" stroke-dasharray="1 0"
+                    refX="0" refY="0" markerUnits="strokeWidth" orient="auto" stroke="blue">
+                <polygon points="0,0 5,-4 10,0 5,4" stroke-width="1px" fill="white"/>
+            </marker>
+            <marker id="aggregationRelationshipR" markerWidth="30" markerHeight="10" viewBox="-15 -5 30 10" stroke-dasharray="1 0"
+                    refX="0" refY="0" markerUnits="strokeWidth" orient="auto" stroke="blue">
+                <polygon points="0,0 -5,-4 -10,0 -5,4" stroke-width="1px" fill="white"/>
+            </marker>
+            <marker id="compositionRelationshipL" markerWidth="30" markerHeight="10" viewBox="-15 -5 30 10" stroke-dasharray="1 0" 
+                    refX="0" refY="0" markerUnits="strokeWidth" orient="auto" stroke="blue">
+                <polygon points="0,0 5,-4 10,0 5,4" stroke-width="1px" fill="blue"/>
+            </marker>
+            <marker id="compositionRelationshipR" markerWidth="30" markerHeight="10" viewBox="-15 -5 30 10" stroke-dasharray="1 0" 
+                    refX="0" refY="0" markerUnits="strokeWidth" orient="auto" stroke="blue">
+                <polygon points="0,0 -5,-4 -10,0 -5,4" stroke-width="1px" fill="blue"/>
+            </marker>
+        </defs>
+    </svg>
+
+    <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jpreLoader.min.js"></script>
+    <script type="text/javascript" src="js/oz.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+    <script type="text/javascript" src="Plugin/bootstrap-dialog/bootstrap-dialog.js"></script>
+    <script type="text/javascript" src="js/detect-zoom.js"></script>
+    <script type="text/javascript" src="js/iconselect.js"></script>
+    <script type="text/javascript" src="js/iscroll.js"></script>
+    <script type="text/javascript" src="js/wwwsqldesigner.js"></script>
+    <script type="text/javascript" src="js/globalkeys.js"></script>
+
+    <script type="text/javascript">
+        var d = new SQL.Designer();
+        //jPreLoader script
+        $(document).ready(function() {
+            var timer;
+            /*var mobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
+            if(mobile) d.setOption("hide", 1);*/
+            //calling jPreLoader function with properties
+            $('body').jpreLoader({
+                splashID: "#jSplash",
+                loaderVPos: '70%',
+                autoClose: false,
+                closeBtnText: "Let's Begin!",
+                splashFunction: function() {  
+                    //passing Splash Screen script to jPreLoader
+                    $('#jSplash').children('section').not('.selected').hide();
+                    $('#jSplash').hide().fadeIn(800);
+                    timer = setInterval(function() {
+                        splashRotator();
+                    }, 4000);
+                    setTimeout(function() {
+                        $('#jpreButton').click();
+                    }, 16000);
+                }
+            }, function() { //callback function
+                clearInterval(timer);
+            });
+            $('#jpreOverlay').addClass('container-fluid');
+        });
+    </script>
+</body>
+
+</html>
