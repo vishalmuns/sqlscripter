@@ -1,3 +1,4 @@
+# Version 0.1
 # sqlscripter
 This is an online tool available to everyone to create database designs and get scripts to create the database. 
 
@@ -6,6 +7,8 @@ Current export options available are:
 -postgresql
 -sqlite
 more options will be added soon..
+
+
 
 # Next new updates
 —User will be able Create account.
